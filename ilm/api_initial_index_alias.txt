@@ -1,0 +1,7 @@
+curl -s -X PUT "http://localhost:9200/cs1_logs-000001" -H 'Content-Type: application/json' -d '
+{
+  "aliases": {
+    "cs1_logs-write": { "is_write_index": true }
+  }
+}'
+

@@ -1,0 +1,26 @@
+curl -s -X PUT "http://localhost:9200/_index_template/cs1_logs_template" -H 'Content-Type: application/json' -d '
+{
+  "index_patterns": ["cs1_logs-*"],
+  "priority": 500,
+  "template": {
+    "settings": {
+      "index.number_of_shards": 1,
+      "index.number_of_replicas": 1,
+      "index.lifecycle.name": "cs1_policy",
+      "index.lifecycle.rollover_alias": "cs1_logs-write",
+      "index.refresh_interval": "1s"
+    },
+    "mappings": {
+      "properties": {
+        "@timestamp": { "type": "date" },
+        "file_name": { "type": "keyword" },
+        "train_id": { "type": "keyword" },
+        "test_id": { "type": "keyword" },
+        "message": { "type": "text", "fields": { "keyword": { "type": "keyword", "ignore_above": 1024 } } },
+        "log_level": { "type": "keyword" },
+        "source": { "type": "keyword" }
+      }
+    }
+  }
+}'
+

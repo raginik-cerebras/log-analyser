@@ -77,5 +77,45 @@ All endpoints require an API key. Pass the API key in the request header as foll
     curl -X 'GET' \
     'http://localhost:8000/logs/file/syslog.log?pattern=Critical&days=1' \
     -H 'accept: application/json' \
-    -H 'x-api-key: default_api_key' ```
+    -H 'x-api-key: default_api_key' 
+   ```
 
+### 2. Search
+## General Pattern Search (Lucene Syntax): Supports complex queries like error AND "connection timeout".
+   ```bash 
+   curl -X 'GET' \
+  'http://localhost:8000/search/pattern?pattern=error%20AND%20timeout&days=7' \
+  -H 'accept: application/json' \
+  -H 'x-api-key: default_api_key'
+   ```
+## Search for errors (Wildcard): Useful for finding substrings like *NullPointer*.
+   ```bash
+      curl -X 'GET' \
+   'http://localhost:8000/search/errors?pattern=NullPointer&days=7' \
+   -H 'accept: application/json' \
+   -H 'x-api-key: default_api_key'
+   ```
+
+### 3. Statistics
+## Find files containing a pattern:
+   ```bash
+      curl -X 'GET' \
+   'http://localhost:8000/stats/files?pattern=IOError&days=30' \
+   -H 'accept: application/json' \
+   -H 'x-api-key: default_api_key'
+  ```
+
+## Find training jobs containing a pattern:
+   ```bash
+      curl -X 'GET' \
+   'http://localhost:8000/stats/trains?pattern=CUDA_ERROR&days=30' \
+   -H 'accept: application/json' \
+   -H 'x-api-key: default_api_key'
+   ```
+## Get error frequency timeline:
+   ```bash
+      curl -X 'GET' \
+   'http://localhost:8000/stats/errors/timeline?pattern=Error&days=90' \
+   -H 'accept: application/json' \
+   -H 'x-api-key: default_api_key'
+  ```
